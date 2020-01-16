@@ -1,6 +1,9 @@
 package ru.avalon.java.tcp;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 
@@ -46,7 +49,8 @@ public final class TcpSender {
         /*
          * TODO Реализовать метод prepareAddress класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        SocketAddress address = new InetSocketAddress(0);
+        return address;
     }
 
     /**
@@ -79,7 +83,11 @@ public final class TcpSender {
         /*
          * TODO Реализовать метод send класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try (OutputStream out = socket.getOutputStream();
+             PrintWriter writer = new PrintWriter(out)) {
+            writer.write(message);
+            writer.flush();
+        }
     }
 
 }
