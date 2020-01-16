@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.*;
 
 /**
  * Упражнение на выаботку умений связанных с получением сообщений,
@@ -47,8 +48,8 @@ public final class TcpReceiver {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             return serverSocket;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(TcpReceiver.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -70,14 +71,13 @@ public final class TcpReceiver {
             try (InputStream in = socket.getInputStream();
                  Reader reader = new InputStreamReader(in);
                  BufferedReader buf = new BufferedReader(reader)) {
-                int ch;
                 char[] cbuf = new char[1024];
-                while ((ch = buf.read(cbuf)) != -1) {
+                while ((buf.read(cbuf)) != -1) {
                     message.append(cbuf);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(TcpReceiver.class.getName()).log(Level.SEVERE, null, ex);
         }
         return message.toString();
     }
