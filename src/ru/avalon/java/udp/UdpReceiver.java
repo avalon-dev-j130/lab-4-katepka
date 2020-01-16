@@ -1,8 +1,11 @@
 package ru.avalon.java.udp;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
+import java.util.logging.*;
 
 /**
  * Упражнение, на правленное на выработку умений, связанных с полученеим
@@ -38,7 +41,8 @@ public final class UdpReceiver {
         /*
          * TODO Реализовать метод prepareBuffer класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        byte[] buffer = new byte[1024];
+        return buffer;
     }
 
     /**
@@ -54,7 +58,8 @@ public final class UdpReceiver {
         /*
          * TODO Реализовать метод preparePacket класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        DatagramPacket datagram = new DatagramPacket(buffer, buffer.length);
+        return datagram;
     }
 
     /**
@@ -68,7 +73,13 @@ public final class UdpReceiver {
         /*
          * TODO Реализовать метод prepareSocket класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        DatagramSocket socket = null;
+        try {
+            socket = new DatagramSocket(port);
+        } catch (SocketException ex) {
+            Logger.getLogger(UdpReceiver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return socket;
     }
 
     /**
@@ -83,7 +94,13 @@ public final class UdpReceiver {
         /*
          * TODO Реализовать метод getMessage класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        String message = null;
+        try {
+            message = new String(packet.getData(), "utf-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(UdpReceiver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return message;
     }
 
 }
