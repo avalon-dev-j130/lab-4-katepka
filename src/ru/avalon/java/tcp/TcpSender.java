@@ -63,7 +63,8 @@ public final class TcpSender {
         /*
          * TODO Реализовать метод connect класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        Socket socket = new Socket(address.toString(), 0);
+        return socket;
     }
 
     /**

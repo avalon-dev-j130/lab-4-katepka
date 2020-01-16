@@ -1,7 +1,10 @@
 package ru.avalon.java.tcp;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -64,11 +67,14 @@ public final class TcpReceiver {
          */
         StringBuilder message = null;
         try {
-            try (InputStream in = socket.getInputStream()) {
-                int c;
-                while ((c = in.read()) != -1) {
-                    message.append((char) c);
-                }    
+            try (InputStream in = socket.getInputStream();
+                 Reader reader = new InputStreamReader(in);
+                 BufferedReader buf = new BufferedReader(reader)) {
+                int ch;
+                char[] cbuf = new char[1024];
+                while ((ch = buf.read(cbuf)) != -1) {
+                    message.append(cbuf);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
