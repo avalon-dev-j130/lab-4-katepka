@@ -14,6 +14,7 @@ import java.util.logging.*;
  * @author Daniel Alpatov
  */
 public final class UdpReceiver {
+    private static final int MAX_MESSAGE_SIZE = 1024;
 
     public static void main(String[] args) throws IOException {
         // 1. Формиоуем буффер, для хранения получаемых данных.
@@ -41,7 +42,7 @@ public final class UdpReceiver {
         /*
          * TODO Реализовать метод prepareBuffer класса UdpReceiver
          */
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[MAX_MESSAGE_SIZE];
         return buffer;
     }
 

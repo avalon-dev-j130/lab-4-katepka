@@ -16,6 +16,7 @@ import java.util.logging.*;
  * @author Daniel Alpatov
  */
 public final class TcpReceiver {
+    private static final int MAX_MESSAGE_SIZE = 1024;
 
     public static void main(String[] args) throws IOException {
         // 1. Определяем порт, на котором ожидается соединение.
@@ -71,7 +72,7 @@ public final class TcpReceiver {
             try (InputStream in = socket.getInputStream();
                  Reader reader = new InputStreamReader(in);
                  BufferedReader buf = new BufferedReader(reader)) {
-                char[] cbuf = new char[1024];
+                char[] cbuf = new char[MAX_MESSAGE_SIZE];
                 while ((buf.read(cbuf)) != -1) {
                     message.append(cbuf);
                 }
