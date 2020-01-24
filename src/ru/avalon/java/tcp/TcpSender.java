@@ -52,7 +52,7 @@ public final class TcpSender {
          * TODO Реализовать метод prepareAddress класса TcpSender
          */
         InetAddress inetAddress = InetAddress.getLocalHost();
-        SocketAddress address = new InetSocketAddress(inetAddress, 0);
+        SocketAddress address = new InetSocketAddress(inetAddress, 8080);
         return address;
     }
 
@@ -70,7 +70,8 @@ public final class TcpSender {
         /*
          * TODO Реализовать метод connect класса TcpSender
          */
-        Socket socket = new Socket(address.toString(), 0);
+        Socket socket = new Socket();
+        socket.connect(address);
         return socket;
     }
 

@@ -20,7 +20,7 @@ public final class TcpReceiver {
 
     public static void main(String[] args) throws IOException {
         // 1. Определяем порт, на котором ожидается соединение.
-        final int port = 0;
+        final int port = 8080;
         // 2. Подготавливаем серверный сокет.
         final ServerSocket listener = prepareServerSocket(port);
         // 3. Принимаем соединение.

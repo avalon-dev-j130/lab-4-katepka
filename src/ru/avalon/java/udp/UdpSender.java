@@ -57,7 +57,7 @@ public final class UdpSender {
          * TODO Реализовать метод prepareAddress класса UdpSender
          */
         InetAddress inetAddress = InetAddress.getLocalHost();
-        SocketAddress address = new InetSocketAddress(inetAddress, 0);
+        SocketAddress address = new InetSocketAddress(inetAddress, 8080);
         return address;
     }
 
