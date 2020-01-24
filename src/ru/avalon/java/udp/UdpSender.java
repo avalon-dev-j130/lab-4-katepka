@@ -1,9 +1,14 @@
 package ru.avalon.java.udp;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.net.UnknownHostException;
+import java.util.logging.*;
 
 /**
  * Упражнение, направленное на выработку умений, связанных
@@ -39,7 +44,7 @@ public final class UdpSender {
         /*
          * TODO Реализовать метод prepareMessage класса UdpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return "This is a message for testing UDP protocol";
     }
 
     /**
@@ -47,11 +52,13 @@ public final class UdpSender {
      *
      * @return адрес конечной точки.
      */
-    private static SocketAddress prepareAddress() {
+    private static SocketAddress prepareAddress() throws UnknownHostException {
         /*
          * TODO Реализовать метод prepareAddress класса UdpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        SocketAddress address = new InetSocketAddress(inetAddress, 8080);
+        return address;
     }
 
     /**
@@ -64,7 +71,7 @@ public final class UdpSender {
         /*
          * TODO Реализовать метод createSocket класса UdpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return new DatagramSocket();
     }
 
     /**
@@ -78,7 +85,14 @@ public final class UdpSender {
         /*
          * TODO Реализовать метод pack класса UdpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        byte[] datagram = new byte[1024];
+        try {
+            datagram = message.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(UdpSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DatagramPacket packet = new DatagramPacket(datagram, datagram.length);
+        return packet;
     }
 
 }

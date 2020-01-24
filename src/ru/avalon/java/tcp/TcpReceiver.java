@@ -1,8 +1,13 @@
 package ru.avalon.java.tcp;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.*;
 
 /**
  * Упражнение на выаботку умений связанных с получением сообщений,
@@ -11,10 +16,11 @@ import java.net.Socket;
  * @author Daniel Alpatov
  */
 public final class TcpReceiver {
+    private static final int MAX_MESSAGE_SIZE = 1024;
 
     public static void main(String[] args) throws IOException {
         // 1. Определяем порт, на котором ожидается соединение.
-        final int port = 0;
+        final int port = 8080;
         // 2. Подготавливаем серверный сокет.
         final ServerSocket listener = prepareServerSocket(port);
         // 3. Принимаем соединение.
@@ -40,7 +46,13 @@ public final class TcpReceiver {
         /*
          * TODO Реализовать метод prepareServerSocket класса TcpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try {
+            ServerSocket serverSocket = new ServerSocket(port);
+            return serverSocket;
+        } catch (IOException ex) {
+            Logger.getLogger(TcpReceiver.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     /**
@@ -55,7 +67,20 @@ public final class TcpReceiver {
         /*
          * TODO Реализовать метод receive класса TcpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        StringBuilder message = null;
+        try {
+            try (InputStream in = socket.getInputStream();
+                 Reader reader = new InputStreamReader(in);
+                 BufferedReader buf = new BufferedReader(reader)) {
+                char[] cbuf = new char[MAX_MESSAGE_SIZE];
+                while ((buf.read(cbuf)) != -1) {
+                    message.append(cbuf);
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(TcpReceiver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return message.toString();
     }
 
 }
